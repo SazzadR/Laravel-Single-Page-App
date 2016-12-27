@@ -13,12 +13,6 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
 		authenticated: true
 	});
 
-	$routeProvider.when('/logout', {
-		templateUrl: 'templates/users/logout.html',
-		controller: 'usersController',
-		authenticated: true
-	});
-
 	$routeProvider.otherwise('/');
 }]);
 
