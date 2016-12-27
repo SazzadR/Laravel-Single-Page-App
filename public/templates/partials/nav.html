@@ -1,0 +1,26 @@
+<nav class="navbar navbar-inverse" ng-controller="navController">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a href="javascript:void(0)" class="navbar-brand" href="#">Gallery Application</a>
+		</div>
+
+		<ul class="nav navbar-nav">
+			<li ng-repeat="navigation in navigations">
+				<a href="{{ navigation.url }}" ng-hide="navigation.submenu">{{ navigation.menuName }}</a>
+
+				<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" area-haspopup="true" area-expanded="false" ng-show="navigation.submenu">
+					{{ navigation.menuName }} <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li ng-repeat="submenuEach in navigation.submenu">
+						<a href="{{ submenuEach.url }}">{{ submenuEach.menuName }}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li ng-click="logoutUser()"><a href="javascript:void(0)"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+		</ul>
+	</div>
+</nav>

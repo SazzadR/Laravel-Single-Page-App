@@ -7,6 +7,10 @@ myApp.controller('usersController', ['$scope', '$log', 'usersModel', function($s
 			};
 
 			usersModel.attemptLogin(credentials);
+		},
+
+		logoutUser: function() {
+			usersModel.attemptLogout();
 		}
 	});
 }]);

@@ -12,10 +12,12 @@
 </head>
 <body>
 
-	<div ng-view></div>
+	<div ng-controller="globalController">
+		<div ng-view></div>
+	</div>
 
-	<script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
-	<script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('bower_components/angular/angular.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('bower_components/angular-route/angular-route.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('bower_components/angular-cookies/angular-cookies.min.js') }}" type="text/javascript"></script>

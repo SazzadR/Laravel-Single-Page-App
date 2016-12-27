@@ -21,6 +21,8 @@ elixir(mix => {
 	], 'public/js/models.js');
 
 	mix.scripts([
-		'controllers/usersController.js'
+		'controllers/globalController.js',
+		'controllers/usersController.js',
+		'controllers/navController.js',
 	], 'public/js/controllers.js');
 });

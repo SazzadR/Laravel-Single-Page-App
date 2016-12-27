@@ -24,15 +24,18 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
 
 myApp.run(['$rootScope', '$location', '$log', 'usersModel', function($rootScope, $location, $log, usersModel) {
 	$rootScope.$on('$routeChangeStart', function(event, next) {
-		if (next.$$route.authenticated) {
-			if (!usersModel.routeAuthStatus()) {
-				$location.path('/');
-			}
-		}
 
-		if (!next.$$route.authenticated) {
-			if (usersModel.routeAuthStatus()) {
-				$location.path('/dashboard');
+		if (angular.isDefined(next.$$route)) {
+			if (next.$$route.authenticated) {
+				if (!usersModel.routeAuthStatus()) {
+					$location.path('/');
+				}
+			}
+
+			if (!next.$$route.authenticated) {
+				if (usersModel.routeAuthStatus()) {
+					$location.path('/dashboard');
+				}
 			}
 		}
 	});

@@ -20,6 +20,11 @@ myApp.factory('usersModel', ['$http', '$cookies', '$location', '$log', function(
 		});
 	};
 
+	usersModel.attemptLogout = function() {
+		$cookies.remove('auth');
+		$location.path('/');
+	}
+
 	usersModel.routeAuthStatus = function() {
 		var status = $cookies.get('auth');
 
@@ -28,6 +33,10 @@ myApp.factory('usersModel', ['$http', '$cookies', '$location', '$log', function(
 		} else {
 			return false;
 		}
+	};
+
+	usersModel.getUserObject = function() {
+		return angular.fromJson($cookies.get('auth'));
 	};
 
 	return usersModel;
