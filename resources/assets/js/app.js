@@ -1,20 +1,39 @@
+var myApp = angular.module('myApp', ['ngRoute', 'ngCookies']);
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
+myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+	$routeProvider.when('/', {
+		templateUrl: 'templates/users/login.html',
+		controller: 'usersController',
+		authenticated: false
+	});
 
-require('./bootstrap');
+	$routeProvider.when('/dashboard', {
+		templateUrl: 'templates/users/dashboard.html',
+		controller: 'usersController',
+		authenticated: true
+	});
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the body of the page. From here, you may begin adding components to
- * the application, or feel free to tweak this setup for your needs.
- */
+	$routeProvider.when('/logout', {
+		templateUrl: 'templates/users/logout.html',
+		controller: 'usersController',
+		authenticated: true
+	});
 
-Vue.component('example', require('./components/Example.vue'));
+	$routeProvider.otherwise('/');
+}]);
 
-const app = new Vue({
-    el: '#app'
-});
+myApp.run(['$rootScope', '$location', '$log', 'usersModel', function($rootScope, $location, $log, usersModel) {
+	$rootScope.$on('$routeChangeStart', function(event, next) {
+		if (next.$$route.authenticated) {
+			if (!usersModel.routeAuthStatus()) {
+				$location.path('/');
+			}
+		}
+
+		if (!next.$$route.authenticated) {
+			if (usersModel.routeAuthStatus()) {
+				$location.path('/dashboard');
+			}
+		}
+	});
+}]);

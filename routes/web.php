@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('master');
 });
+
+Route::post('auth/login', 'UsersController@authenticate');
