@@ -11,7 +11,7 @@
 				<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" area-haspopup="true" area-expanded="false" ng-show="navigation.submenu">
 					{{ navigation.menuName }} <span class="caret"></span>
 				</a>
-				<ul class="dropdown-menu">
+				<ul class="dropdown-menu" ng-show="navigation.submenu">
 					<li ng-repeat="submenuEach in navigation.submenu">
 						<a href="{{ submenuEach.url }}">{{ submenuEach.menuName }}</a>
 					</li>
@@ -20,7 +20,16 @@
 		</ul>
 
 		<ul class="nav navbar-nav navbar-right">
-			<li ng-click="logoutUser()"><a href="javascript:void(0)"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			<li>
+				<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" area-haspopup="true" area-expanded="false">
+					<span class="glyphicon glyphicon-user"></span> {{ user.name }} <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="javascript:void(0)" ng-click="logoutUser()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+					</li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 </nav>

@@ -36,10 +36,6 @@ myApp.controller('navController', ['$scope', '$log', 'usersModel', function($sco
 						url: '/#!/gallery/add'
 					}
 				]
-			},
-			{
-				menuName: 'Test',
-				url: '/#!/test'
 			}
 		]
 	});
