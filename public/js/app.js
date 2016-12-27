@@ -13,6 +13,18 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
 		authenticated: true
 	});
 
+	$routeProvider.when('/gallery/view', {
+		templateUrl: 'templates/gallery/gallery-view.html',
+		controller: 'usersController',
+		authenticated: true
+	});
+
+	$routeProvider.when('/gallery/add', {
+		templateUrl: 'templates/gallery/gallery-add.html',
+		controller: 'usersController',
+		authenticated: true
+	});
+
 	$routeProvider.otherwise('/');
 }]);
 

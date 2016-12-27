@@ -1,4 +1,4 @@
-myApp.controller('navController', ['$scope', '$log', 'usersModel', function($scope, $nav, usersModel) {
+myApp.controller('navController', ['$scope', '$location', '$log', 'usersModel', function($scope, $location, $log, usersModel) {
 	/*variables*/
 	angular.extend($scope, {
 		user: usersModel.getUserObject(),
@@ -18,5 +18,16 @@ myApp.controller('navController', ['$scope', '$log', 'usersModel', function($sco
 				]
 			}
 		]
+	});
+
+	/*methods*/
+	angular.extend($scope, {
+		checkActiveLink: function(routeLink) {
+			var requestLink = '/#!' + $location.path();
+
+			if (requestLink == routeLink) {
+				return 'make-active';
+			}
+		}
 	});
 }]);

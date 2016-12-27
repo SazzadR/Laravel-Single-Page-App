@@ -12,6 +12,10 @@ const elixir = require('laravel-elixir');
  */
 
 elixir(mix => {
+	mix.sass([
+        'app.scss'
+    ], 'public/css');
+
     mix.scripts([
     	'app.js'
 	], 'public/js/app.js');
