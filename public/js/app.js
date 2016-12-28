@@ -15,13 +15,13 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
 
 	$routeProvider.when('/gallery/view', {
 		templateUrl: 'templates/gallery/gallery-view.html',
-		controller: 'usersController',
+		controller: 'galleryController',
 		authenticated: true
 	});
 
 	$routeProvider.when('/gallery/add', {
 		templateUrl: 'templates/gallery/gallery-add.html',
-		controller: 'usersController',
+		controller: 'galleryController',
 		authenticated: true
 	});
 

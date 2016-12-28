@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::post('auth/login', 'UsersController@authenticate');
+
+Route::post('gallery/save', 'GalleriesController@store');
