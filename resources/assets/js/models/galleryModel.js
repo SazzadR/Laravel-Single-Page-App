@@ -4,7 +4,7 @@ myApp.factory('galleryModel', ['$http', '$location', '$log', function($http, $lo
 	galleryModel.saveGallery = function(galleryData) {
 		$http({
 			method: 'POST',
-			url: baseUrl + 'gallery/save',
+			url: baseUrl + 'galleries',
 			headers: {
 				'Content-Type': 'application/json'
 			},
