@@ -1,5 +1,25 @@
 <div ng-include="globals.navTemplate"></div>
 
 <div class="container">
-	This is gallery view page
+	<div class="row">
+		<div class="col-sm-12">
+			<h1 class="page-header">Galleries</h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div ng-hide="showGalleries">Loading...</div>
+		<div class="col-sm-3" ng-repeat="gallery in galleries">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ gallery.name }}</h3>
+				</div>
+				<div class="panel-body">
+					Created by: <strong>{{ gallery.user.name }}</strong>
+					<br>
+					Created <strong>{{ gallery.created_at }}</strong>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

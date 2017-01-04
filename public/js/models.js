@@ -44,6 +44,10 @@ myApp.factory('usersModel', ['$http', '$cookies', '$location', '$log', function(
 myApp.factory('galleryModel', ['$http', '$location', '$log', function($http, $location, $log) {
 	var galleryModel = {};
 
+	galleryModel.getAllGalleries = function() {
+		return $http.get(baseUrl + 'galleries');
+	};
+
 	galleryModel.saveGallery = function(galleryData) {
 		$http({
 			method: 'POST',
