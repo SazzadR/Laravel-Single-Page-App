@@ -48,6 +48,10 @@ myApp.factory('galleryModel', ['$http', '$location', '$log', function($http, $lo
 		return $http.get(baseUrl + 'galleries');
 	};
 
+	galleryModel.getGalleryById = function(galleryID) {
+		return $http.get(baseUrl + 'gallery/' + galleryID);
+	};
+
 	galleryModel.saveGallery = function(galleryData) {
 		$http({
 			method: 'POST',

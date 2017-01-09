@@ -18,4 +18,5 @@ Route::get('/', function () {
 Route::post('auth/login', 'UsersController@authenticate');
 
 Route::get('galleries', 'GalleriesController@index');
+Route::get('gallery/{galleryID}', 'GalleriesController@show');
 Route::post('galleries', 'GalleriesController@store');

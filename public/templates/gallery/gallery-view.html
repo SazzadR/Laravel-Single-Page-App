@@ -11,7 +11,7 @@
 		<div ng-hide="showGalleries">Loading...</div>
 		<div class="col-sm-3" ng-repeat="gallery in galleries">
 			<div class="panel panel-primary">
-				<div class="panel-heading">
+				<div class="panel-heading" ng-click="viewGallery(gallery.id)">
 					<h3 class="panel-title">{{ gallery.name }}</h3>
 				</div>
 				<div class="panel-body">

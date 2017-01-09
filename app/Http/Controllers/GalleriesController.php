@@ -19,6 +19,12 @@ class GalleriesController extends Controller
 		return response($galleries, 200);
 	}
 
+    public function show($galleryID)
+    {
+        $gallery = Gallery::with('user')->find($galleryID);
+        return response($gallery, 200);
+	}
+
 	public function store(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
