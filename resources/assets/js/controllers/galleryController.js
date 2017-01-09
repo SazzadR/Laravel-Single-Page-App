@@ -14,7 +14,7 @@ myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$rout
 	if ($routeParams.galleryID) {
 		galleryModel.getGalleryById($routeParams.galleryID).then(function(successResponse) {
 			$scope.singleGallery = successResponse.data;
-			$log.log($scope.singleGallery);
+			$scope.showGallery = true;
         });
 	}
 

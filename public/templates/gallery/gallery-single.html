@@ -6,4 +6,12 @@
 			<h1 class="page-header">View Gallery</h1>
 		</div>
 	</div>
+
+	<div class="row">
+		<div ng-hide="showGallery">Loading...</div>
+		<div class="col-sm-12">
+			<h2>{{ singleGallery.name }}</h2>
+			<p><i>Created by {{ singleGallery.user.name }} {{ singleGallery.created_at }}</i></p>
+		</div>
+	</div>
 </div>
