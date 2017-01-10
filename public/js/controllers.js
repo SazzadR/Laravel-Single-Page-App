@@ -55,6 +55,20 @@ myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$rout
 	angular.extend($scope, {
 		newGallery: {},
 		singleGallery: {},
+		dropzoneConfig: {
+			'options': { // passed into the Dropzone constructor
+				'url': baseUrl + 'upload-file'
+			},
+			'eventHandlers': {
+				'sending': function (file, xhr, formData) {
+					formData.append('_token', csrfToken);
+					formData.append('galleryID', $routeParams.galleryID);
+				},
+				'success': function (file, response) {
+					$log.log(response);
+				}
+			}
+		},
 		errorDiv: false,
 		errorMessages: []
 	});
@@ -68,7 +82,7 @@ myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$rout
 		galleryModel.getGalleryById($routeParams.galleryID).then(function(successResponse) {
 			$scope.singleGallery = successResponse.data;
 			$scope.showGallery = true;
-        });
+		});
 	}
 
 	angular.extend($scope, {

@@ -42,4 +42,9 @@ class GalleriesController extends Controller
 
 		return response($gallery, 201);
 	}
+
+	public function uploadImage(Request $request)
+	{
+		return response($request->all(), 200);
+	}
 }
