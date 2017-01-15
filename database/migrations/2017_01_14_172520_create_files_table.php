@@ -20,7 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('file_name')->comment('Sanitized file name');
             $table->string('file_path')->comment('The actual url where the file is stored');
             $table->string('type')->comment('Where the file is stored. S3 / Local');
-            $table->boolean('status')->default(0)->comment('Whether the file is being used');
+            $table->boolean('status')->default(false)->comment('Whether the file is being used');
             $table->timestamps();
         });
     }

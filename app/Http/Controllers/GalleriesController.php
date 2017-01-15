@@ -8,6 +8,7 @@ use App\File;
 use App\Gallery;
 use App\GalleryImages;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
 class GalleriesController extends Controller
@@ -65,30 +66,54 @@ class GalleriesController extends Controller
             return response('There are errors in form', 400);
         }
 
-        $galleryId = $request->input('galleryID');
-        $mimeType = $request->file('file')->getClientMimeType();
-        $fileType = $request->file('file')->guessClientExtension();
-        $uploadedFileName = 'gallery_' . $galleryId . '_' . uniqid() . '.' . $request->file('file')->guessClientExtension();
-
         $storage = Storage::disk('public');
-        if ($storage->put($uploadedFileName, file_get_contents(request()->file('file')), 'public')) {
-            $file = File::create([
-                'mime_type' => $mimeType,
-                'file_type' => $fileType,
-                'file_name' => $uploadedFileName,
-                'file_path' => 'storage',
-                'type' => 'local',
-                'status' => true
-            ]);
+        $file = $request->file('file');
+        $galleryId = $request->input('galleryID');
+        $mimeType = $file->getClientMimeType();
+        $fileType = $file->guessClientExtension();
+        $fileName = uniqid() . '.' . $file->guessClientExtension();
+        $image = Image::make($file);
 
-            GalleryImages::create([
-                'gallery_id' => $galleryId,
-                'image_id' => $file->id
-            ]);
+        // Main image
+        $imageMain = $image->encode();
 
-            return asset('storage/' . $file->file_name);
-        }
+        // Generate thumb
+        $imageThumb = Image::make($file)->fit(320)->crop(320, 240, 0, 0);
+        $imageThumb->encode();
 
-        return response('File upload failed', 409);
+        // Generate medium size
+        $imageMedium = Image::make($file)->resize(800, null, function ($constrain) {
+            $constrain->aspectRatio();
+        });
+        $imageMedium->encode();
+
+        // Upload images
+        $storage->put("gallery_{$galleryId}/main/" . $fileName, $imageMain, 'public');
+        $storage->put("gallery_{$galleryId}/medium/" . $fileName, $imageMedium, 'public');
+        $storage->put("gallery_{$galleryId}/thumb/" . $fileName, $imageThumb, 'public');
+
+        // DB entry
+        $file = File::create([
+            'mime_type' => $mimeType,
+            'file_type' => $fileType,
+            'file_name' => $fileName,
+            'file_path' => 'storage',
+            'type' => 'local'
+        ]);
+
+        GalleryImages::create([
+            'gallery_id' => $galleryId,
+            'image_id' => $file->id
+        ]);
+
+        $fileImage = File::find($file->id);
+        $fileImage->status = true;
+        $fileImage->save();
+
+        return [
+            'thumb' => asset("storage/gallery_{$galleryId}/thumb/" . $fileName),
+            'medium' => asset("storage/gallery_{$galleryId}/medium/" . $fileName),
+            'main' => asset("storage/gallery_{$galleryId}/main/" . $fileName)
+        ];
     }
 }
