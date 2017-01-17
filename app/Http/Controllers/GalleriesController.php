@@ -39,7 +39,7 @@ class GalleriesController extends Controller
             $imageArray[$key] = [
                 'thumbUrl' => asset("storage/gallery_{$galleryID}/thumb/" . $image->file_name),
                 'url' => asset("storage/gallery_{$galleryID}/medium/" . $image->file_name),
-                'large' => asset("storage/gallery_{$galleryID}/main/" . $image->file_name)
+                'main' => asset("storage/gallery_{$galleryID}/main/" . $image->file_name)
             ];
         }
 
@@ -130,8 +130,8 @@ class GalleriesController extends Controller
         $fileImage->save();
 
         return [
-            'thumb' => asset("storage/gallery_{$galleryId}/thumb/" . $fileName),
-            'medium' => asset("storage/gallery_{$galleryId}/medium/" . $fileName),
+            'thumbUrl' => asset("storage/gallery_{$galleryId}/thumb/" . $fileName),
+            'url' => asset("storage/gallery_{$galleryId}/medium/" . $fileName),
             'main' => asset("storage/gallery_{$galleryId}/main/" . $fileName)
         ];
     }

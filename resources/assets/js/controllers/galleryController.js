@@ -12,13 +12,19 @@ myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$rout
 					formData.append('galleryID', $routeParams.galleryID);
 				},
 				'success': function (file, response) {
-					$log.log(response);
+				    $scope.singleGallery.images.push(response);
+				    $scope.$emit('imageAdded', $scope.singleGallery);
 				}
 			}
 		},
 		errorDiv: false,
 		errorMessages: []
 	});
+
+	$scope.$on('imageAdded', function (event, args) {
+        $scope.singleGallery = args;
+        $scope.$apply();
+    });
 
 	galleryModel.getAllGalleries().then(function(successResponse) {
 		$scope.galleries = successResponse.data;
