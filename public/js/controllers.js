@@ -51,7 +51,7 @@ myApp.controller('navController', ['$scope', '$location', '$log', 'usersModel', 
 		}
 	});
 }]);
-myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$routeParams', '$log', 'galleryModel', function($scope, $location, $timeout, $routeParams, $log, galleryModel) {
+myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$routeParams', '$log', 'galleryModel', 'Lightbox', function($scope, $location, $timeout, $routeParams, $log, galleryModel, Lightbox) {
 	angular.extend($scope, {
 		newGallery: {},
 		singleGallery: {},
@@ -97,7 +97,11 @@ myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$rout
 
 		viewGallery: function(galleryID) {
 			$location.path('/gallery/view/' + galleryID);
-		}
+		},
+
+        openLightboxModal: function (index) {
+            Lightbox.openModal($scope.singleGallery.images, index);
+        }
 	});
 }]);
 //# sourceMappingURL=controllers.js.map

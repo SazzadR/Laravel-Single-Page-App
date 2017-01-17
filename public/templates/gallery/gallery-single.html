@@ -15,6 +15,14 @@
 		</div>
 	</div>
 
+    <div class="row">
+        <div class="col-xs-3" ng-repeat="(key, value) in singleGallery.images">
+            <a ng-click="openLightboxModal($index)" class="thumbnail">
+                <img ng-src="{{ value.thumbUrl }}">
+            </a>
+        </div>
+    </div>
+
 	<div class="row">
 		<div class="col-sm-12">
 			<form action="/file-upload"

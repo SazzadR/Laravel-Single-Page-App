@@ -20,6 +20,7 @@
     "angular": "^1.6.1",
     "angular-route": "^1.6.1",
     "angular-cookies": "^1.6.1",
-    "dropzone": "^4.3.0"
+    "dropzone": "^4.3.0",
+    "angular-bootstrap-lightbox": "^0.12.0"
   }
 }

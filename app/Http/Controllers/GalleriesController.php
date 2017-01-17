@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use DB;
 use Storage;
 use App\File;
 use App\Gallery;
@@ -26,6 +27,24 @@ class GalleriesController extends Controller
     public function show($galleryID)
     {
         $gallery = Gallery::with('user')->find($galleryID);
+
+        $images =
+        DB::table('gallery_images')
+            ->where('gallery_id', $galleryID)
+            ->join('files', 'gallery_images.image_id', '=', 'files.id')
+            ->get();
+
+        $imageArray = [];
+        foreach ($images as $key => $image) {
+            $imageArray[$key] = [
+                'thumbUrl' => asset("storage/gallery_{$galleryID}/thumb/" . $image->file_name),
+                'url' => asset("storage/gallery_{$galleryID}/medium/" . $image->file_name),
+                'large' => asset("storage/gallery_{$galleryID}/main/" . $image->file_name)
+            ];
+        }
+
+        $gallery->images = $imageArray;
+
         return response($gallery, 200);
 	}
 
