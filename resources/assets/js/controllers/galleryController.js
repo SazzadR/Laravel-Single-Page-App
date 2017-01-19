@@ -52,6 +52,11 @@ myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$rout
 			$location.path('/gallery/view/' + galleryID);
 		},
 
+		deleteImage: function (imageId) {
+			var galleryId = $routeParams.galleryID;
+			galleryModel.deleteImage(galleryId, imageId);
+        },
+
         openLightboxModal: function (index) {
             Lightbox.openModal($scope.singleGallery.images, index);
         }

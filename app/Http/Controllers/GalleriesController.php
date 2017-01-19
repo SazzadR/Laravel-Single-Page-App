@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use DB;
+use Auth;
 use Storage;
 use App\File;
 use App\Gallery;
@@ -37,6 +37,7 @@ class GalleriesController extends Controller
         $imageArray = [];
         foreach ($images as $key => $image) {
             $imageArray[$key] = [
+                'id' => $image->id,
                 'thumbUrl' => asset("storage/gallery_{$galleryID}/thumb/" . $image->file_name),
                 'url' => asset("storage/gallery_{$galleryID}/medium/" . $image->file_name),
                 'main' => asset("storage/gallery_{$galleryID}/main/" . $image->file_name)
@@ -64,6 +65,36 @@ class GalleriesController extends Controller
 		]);
 
 		return response($gallery, 201);
+	}
+
+    public function destroyImage($galleryId, $imageId)
+    {
+        $imageObject = File::findOrFail($imageId);
+        $imageName = $imageObject->file_name;
+
+        Storage::disk('public')->delete("gallery_{$galleryId}/main/{$imageName}");
+        Storage::disk('public')->delete("gallery_{$galleryId}/medium/{$imageName}");
+        Storage::disk('public')->delete("gallery_{$galleryId}/thumb/{$imageName}");
+
+        DB::beginTransaction();
+        try {
+            File::find($imageId)->delete();
+            GalleryImages::where([
+                'gallery_id' => $galleryId,
+                'image_id' => $imageId
+            ])->delete();
+            DB::commit();
+            $success = true;
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            $success = false;
+        }
+
+        if ($success) {
+            return response()->json(['message' => 'Deleted successfully'], 410);
+        } else {
+            return response()->json(['message' => 'Can not delete successfully'], 409);
+        }
 	}
 
 	public function uploadImage(Request $request)

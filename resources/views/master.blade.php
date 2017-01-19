@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('bower_components/dropzone/dist/min/basic.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/angular-loading-bar/build/loading-bar.css') }}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 	<script type="text/javascript">
 		var baseUrl = "{{ url('/') }}/";

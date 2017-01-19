@@ -16,10 +16,13 @@
 	</div>
 
     <div class="row">
-        <div class="col-xs-3" ng-repeat="(key, value) in singleGallery.images">
+        <div class="col-xs-3 gallery-image-single gallery-container" ng-repeat="(key, value) in singleGallery.images">
             <a ng-click="openLightboxModal($index)" class="thumbnail">
                 <img ng-src="{{ value.thumbUrl }}">
             </a>
+			<div class="delete-icon" ng-click="deleteImage(value.id)">
+				<span class="fa fa-trash"></span> Delete
+			</div>
         </div>
     </div>
 

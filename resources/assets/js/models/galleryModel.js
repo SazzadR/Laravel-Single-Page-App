@@ -26,5 +26,12 @@ myApp.factory('galleryModel', ['$http', '$location', '$log', function($http, $lo
 		});
 	};
 
+	galleryModel.deleteImage = function (galleryId, imageId) {
+		// $log.log(baseUrl + 'delete-image/' + imageId);
+		$http.delete(baseUrl + 'gallery/' + galleryId + '/delete-image/' + imageId).then(function (successResponse) {
+			$log.log(successResponse);
+        });
+    };
+
 	return galleryModel;
 }]);

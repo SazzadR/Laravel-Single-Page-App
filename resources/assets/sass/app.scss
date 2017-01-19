@@ -4,6 +4,24 @@
 	}
 }
 
+.gallery-container {
+	cursor: pointer;
+}
+
+.gallery-image-single {
+	position: relative;
+	.delete-icon {
+		position: absolute;
+		bottom: 30px;
+		right: 40%;
+		color: red;
+		//display: none;
+		&:hover {
+			background: wheat;
+		}
+	}
+}
+
 .gallery-heading {
 	cursor: pointer;
 }

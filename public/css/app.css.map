@@ -1,1 +1,0 @@
-{"version":3,"sources":["app.scss"],"names":[],"mappings":"AAAA;EAEE,kBAAkB;CAClB;;AAGF;EACC,gBAAgB;CAChB","file":"app.css","sourcesContent":[".navbar {\n\t.make-active {\n\t\tfont-weight: bold;\n\t}\n}\n\n.gallery-heading {\n\tcursor: pointer;\n}"]}

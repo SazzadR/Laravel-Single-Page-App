@@ -8,3 +8,5 @@ Homestead.yaml
 .env
 _ide_helper.php
 composer.lock
+public/css
+public/js
