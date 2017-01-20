@@ -91,9 +91,9 @@ class GalleriesController extends Controller
         }
 
         if ($success) {
-            return response()->json(['message' => 'Deleted successfully'], 410);
+            return response()->json(['message' => 'Deleted successfully'], 200);
         } else {
-            return response()->json(['message' => 'Can not delete successfully'], 409);
+            return response()->json(['message' => 'Can not delete successfully'], 200);
         }
 	}
 
