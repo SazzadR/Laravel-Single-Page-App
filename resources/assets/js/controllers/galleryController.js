@@ -1,4 +1,4 @@
-myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$routeParams', '$log', 'galleryModel', 'Lightbox', function ($scope, $location, $timeout, $routeParams, $log, galleryModel, Lightbox) {
+myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$routeParams', '$log', 'galleryModel', 'Lightbox', 'data', function ($scope, $location, $timeout, $routeParams, $log, galleryModel, Lightbox, data) {
     angular.extend($scope, {
         newGallery: {},
         singleGallery: {},
@@ -26,16 +26,21 @@ myApp.controller('galleryController', ['$scope', '$location', '$timeout', '$rout
         $scope.$apply();
     });
 
-    galleryModel.getAllGalleries().then(function (successResponse) {
-        $scope.galleries = successResponse.data;
-        $scope.showGalleries = true;
-    });
+    if (data && data.galleries != undefined) {
+        data.galleries.then(function (successResponse) {
+            $scope.galleries = successResponse.data;
+            $scope.showGalleries = true;
+            $log.log($scope.galleries);
+        });
+    }
 
     if ($routeParams.galleryID) {
-        galleryModel.getGalleryById($routeParams.galleryID).then(function (successResponse) {
-            $scope.singleGallery = successResponse.data;
-            $scope.showGallery = true;
-        });
+        if (data && data.singleGallery != undefined) {
+            data.singleGallery.then(function (successResponse) {
+                $scope.singleGallery = successResponse.data;
+                $scope.showGallery = true;
+            })
+        }
     }
 
     angular.extend($scope, {
