@@ -14,62 +14,33 @@ use Illuminate\Support\Facades\Validator;
 
 class GalleriesController extends Controller
 {
-	public function index()
-	{
-		$galleries = Gallery::with('user')
-							->where('user_id', Auth::user()->id)
-							->orderBy('created_at', 'desc')
-							->get();
-
-		return response($galleries, 200);
-	}
-
-    public function show($galleryID, $getUpdated = null)
+    public function index()
     {
-        $gallery = Gallery::with('user')->find($galleryID);
-
-        $images =
-        DB::table('gallery_images')
-            ->where('gallery_id', $galleryID)
-            ->join('files', 'gallery_images.image_id', '=', 'files.id')
+        $galleries = Gallery::with('user')
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        $imageArray = [];
-        foreach ($images as $key => $image) {
-            $imageArray[$key] = [
-                'id' => $image->id,
-                'thumbUrl' => asset("storage/gallery_{$galleryID}/thumb/" . $image->file_name),
-                'url' => asset("storage/gallery_{$galleryID}/medium/" . $image->file_name),
-                'main' => asset("storage/gallery_{$galleryID}/main/" . $image->file_name)
-            ];
+        return response($galleries, 200);
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3'
+        ]);
+
+        if ($validator->fails()) {
+            return response($validator->errors(), 422);
         }
 
-        $gallery->images = $imageArray;
+        $gallery = Gallery::create([
+            'name' => $request->input('name'),
+            'user_id' => 1
+        ]);
 
-        if ($getUpdated == 'getUpdated') {
-            return $gallery;
-        }
-
-        return response($gallery, 200);
-	}
-
-	public function store(Request $request)
-	{
-		$validator = Validator::make($request->all(), [
-			'name' => 'required|min:3'
-		]);
-
-		if ($validator->fails()) {
-			return response($validator->errors(), 422);
-		}
-
-		$gallery = Gallery::create([
-			'name' => $request->input('name'),
-			'user_id' => 1
-		]);
-
-		return response($gallery, 201);
-	}
+        return response($gallery, 201);
+    }
 
     public function destroyImage($galleryId, $imageId)
     {
@@ -103,11 +74,40 @@ class GalleriesController extends Controller
         } else {
             return response()->json(['message' => 'Can not delete successfully'], 200);
         }
-	}
+    }
 
-	public function uploadImage(Request $request)
-	{
-	    if (!$request->hasFile('file')) {
+    public function show($galleryID, $getUpdated = null)
+    {
+        $gallery = Gallery::with('user')->find($galleryID);
+
+        $images =
+            DB::table('gallery_images')
+                ->where('gallery_id', $galleryID)
+                ->join('files', 'gallery_images.image_id', '=', 'files.id')
+                ->get();
+
+        $imageArray = [];
+        foreach ($images as $key => $image) {
+            $imageArray[$key] = [
+                'id' => $image->id,
+                'thumbUrl' => asset("storage/gallery_{$galleryID}/thumb/" . $image->file_name),
+                'url' => asset("storage/gallery_{$galleryID}/medium/" . $image->file_name),
+                'main' => asset("storage/gallery_{$galleryID}/main/" . $image->file_name)
+            ];
+        }
+
+        $gallery->images = $imageArray;
+
+        if ($getUpdated == 'getUpdated') {
+            return $gallery;
+        }
+
+        return response($gallery, 200);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if (!$request->hasFile('file')) {
             return response('No file sent', 400);
         }
 
@@ -120,7 +120,7 @@ class GalleriesController extends Controller
             'file' => 'required|mimes:jpeg,jpg,png|max:6000'
         ]);
 
-	    if ($validator->fails()) {
+        if ($validator->fails()) {
             return response('There are errors in form', 400);
         }
 

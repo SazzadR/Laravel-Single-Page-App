@@ -1,16 +1,16 @@
-myApp.controller('usersController', ['$scope', '$log', 'usersModel', function($scope, $log, usersModel) {
-	angular.extend($scope, {
-		loginUser: function() {
-			var credentials = {
-				email: $scope.email,
-				password: $scope.password
-			};
+myApp.controller('usersController', ['$scope', '$log', 'usersModel', function ($scope, $log, usersModel) {
+    angular.extend($scope, {
+        loginUser: function () {
+            var credentials = {
+                email: $scope.email,
+                password: $scope.password
+            };
 
-			usersModel.attemptLogin(credentials);
-		},
+            usersModel.attemptLogin(credentials);
+        },
 
-		logoutUser: function() {
-			usersModel.attemptLogout();
-		}
-	});
+        logoutUser: function () {
+            usersModel.attemptLogout();
+        }
+    });
 }]);

@@ -1,43 +1,43 @@
-myApp.factory('usersModel', ['$http', '$cookies', '$location', '$log', function($http, $cookies, $location, $log) {
-	var usersModel = {};
+myApp.factory('usersModel', ['$http', '$cookies', '$location', '$log', function ($http, $cookies, $location, $log) {
+    var usersModel = {};
 
-	usersModel.attemptLogin = function(credentials) {
-		$http({
-			method: 'POST',
-			url: baseUrl + 'auth/login',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			data: {
-				email: credentials.email,
-				password: credentials.password
-			}
-		}).then(function(successResponse) {
-			$cookies.put('auth', JSON.stringify(successResponse.data));
-			$location.path('/dashboard');
-		}, function(errorResponse) {
-			alert(errorResponse.data);
-		});
-	};
+    usersModel.attemptLogin = function (credentials) {
+        $http({
+            method: 'POST',
+            url: baseUrl + 'auth/login',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                email: credentials.email,
+                password: credentials.password
+            }
+        }).then(function (successResponse) {
+            $cookies.put('auth', JSON.stringify(successResponse.data));
+            $location.path('/dashboard');
+        }, function (errorResponse) {
+            alert(errorResponse.data);
+        });
+    };
 
-	usersModel.attemptLogout = function() {
-		$cookies.remove('auth');
-		$location.path('/');
-	}
+    usersModel.attemptLogout = function () {
+        $cookies.remove('auth');
+        $location.path('/');
+    }
 
-	usersModel.routeAuthStatus = function() {
-		var status = $cookies.get('auth');
+    usersModel.routeAuthStatus = function () {
+        var status = $cookies.get('auth');
 
-		if (status) {
-			return true;
-		} else {
-			return false;
-		}
-	};
+        if (status) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
-	usersModel.getUserObject = function() {
-		return angular.fromJson($cookies.get('auth'));
-	};
+    usersModel.getUserObject = function () {
+        return angular.fromJson($cookies.get('auth'));
+    };
 
-	return usersModel;
+    return usersModel;
 }]);

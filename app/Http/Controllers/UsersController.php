@@ -9,15 +9,15 @@ class UsersController extends Controller
 {
     public function authenticate(Request $request)
     {
-    	$credentials = [
-    		'email' => $request->input('email'),
-    		'password' => $request->input('password')
-    	];
+        $credentials = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password')
+        ];
 
-    	if (Auth::attempt($credentials)) {
-    		return response(Auth::user(), 200);
-    	}
+        if (Auth::attempt($credentials)) {
+            return response(Auth::user(), 200);
+        }
 
-    	return response('Username password not matched', 403);
+        return response('Username password not matched', 403);
     }
 }
