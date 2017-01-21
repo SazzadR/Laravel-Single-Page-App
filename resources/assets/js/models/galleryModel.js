@@ -27,10 +27,7 @@ myApp.factory('galleryModel', ['$http', '$location', '$log', function ($http, $l
     };
 
     galleryModel.deleteImage = function (galleryId, imageId) {
-        // $log.log(baseUrl + 'delete-image/' + imageId);
-        $http.delete(baseUrl + 'gallery/' + galleryId + '/delete-image/' + imageId).then(function (successResponse) {
-            $log.log(successResponse);
-        });
+        return $http.delete(baseUrl + 'gallery/' + galleryId + '/delete-image/' + imageId);
     };
 
     return galleryModel;

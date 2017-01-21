@@ -24,7 +24,7 @@ class GalleriesController extends Controller
 		return response($galleries, 200);
 	}
 
-    public function show($galleryID)
+    public function show($galleryID, $getUpdated = null)
     {
         $gallery = Gallery::with('user')->find($galleryID);
 
@@ -45,6 +45,10 @@ class GalleriesController extends Controller
         }
 
         $gallery->images = $imageArray;
+
+        if ($getUpdated == 'getUpdated') {
+            return $gallery;
+        }
 
         return response($gallery, 200);
 	}
@@ -91,7 +95,11 @@ class GalleriesController extends Controller
         }
 
         if ($success) {
-            return response()->json(['message' => 'Deleted successfully'], 200);
+            return response()->json([
+                'imageId' => $imageId,
+                'updatedGallery' => $this->show($galleryId, 'getUpdated'),
+                'message' => 'Deleted successfully'
+            ], 200);
         } else {
             return response()->json(['message' => 'Can not delete successfully'], 200);
         }
